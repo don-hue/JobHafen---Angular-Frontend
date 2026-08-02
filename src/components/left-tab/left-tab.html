@@ -1,0 +1,73 @@
+<div class="h-screen border border-surface-200 dark:border-surface-700 rounded-lg overflow-hidden">
+    <p-sidebar-layout class="h-screen min-h-192! relative!">
+        @if (isMobile()) {
+            <p-sidebar-backdrop class="absolute!" />
+        }
+        <p-sidebar id="mobile-nav" [collapsible]="isMobile() ? 'offcanvas' : 'icon'" [overlay]="isMobile()" [open]="!isMobile()" width="14rem">
+            <p-sidebar-spacer />
+            <p-sidebar-aside>
+                <p-sidebar-panel>
+                    <p-sidebar-header>
+                        <p-sidebar-menu>
+                            <p-sidebar-menu-item>
+                                <button pSidebarMenuButton class="p-1!">
+                                    <div class="flex size-6 shrink-0 items-center justify-center rounded-md bg-linear-to-br from-violet-500 to-indigo-600 text-white text-xs font-bold leading-none">JH</div>
+                                    <span class="font-semibold text-sm">JobHafen</span>
+                                </button>
+                            </p-sidebar-menu-item>
+                        </p-sidebar-menu>
+                    </p-sidebar-header>
+                    <p-sidebar-content>
+                        <p-sidebar-group>
+                            <p-sidebar-group-label>Menu</p-sidebar-group-label>
+                            <p-sidebar-group-content>
+                                <p-sidebar-menu>
+                                    <p-sidebar-menu-item>
+                                        <button pSidebarMenuButton [isActive]="true">
+                                            <svg data-p-icon="home"></svg>
+                                            <span>Home</span>
+                                        </button>
+                                    </p-sidebar-menu-item>                                  
+                                    <p-sidebar-menu-item>
+                                        <button pSidebarMenuButton>
+                                            <svg data-p-icon="search"></svg>
+                                            <span>Search</span>
+                                        </button>
+                                    </p-sidebar-menu-item>                                                                                
+                                    <p-sidebar-menu-item>
+                                        <button pSidebarMenuButton>
+                                            <svg data-p-icon="cog"></svg>
+                                            <span>Settings</span>
+                                        </button>
+                                    </p-sidebar-menu-item>
+                                </p-sidebar-menu>
+                            </p-sidebar-group-content>
+                        </p-sidebar-group>
+                    </p-sidebar-content>
+                    <p-sidebar-footer>
+                        <p-sidebar-menu>
+                            <p-sidebar-menu-item>
+                                <button pSidebarMenuButton class="p-1!">
+                                    <p-avatar label="CU" shape="circle" class="size-6 shrink-0 text-xs" />
+                                    <span>Current User</span>
+                                </button>
+                            </p-sidebar-menu-item>
+                        </p-sidebar-menu>
+                    </p-sidebar-footer>
+                </p-sidebar-panel>
+            </p-sidebar-aside>
+        </p-sidebar>
+        <p-sidebar-main>
+            <header class="flex h-12 items-center gap-2 border-b border-surface-200 dark:border-surface-700 px-4">
+                <button pButton pSidebarTrigger target="mobile-nav" severity="secondary" text size="small">
+                    <svg data-p-icon="sidebar"></svg>
+                </button>
+                <span class="text-sm font-medium">Dashboard</span>
+                <span class="ml-auto text-xs text-muted-color rounded-md bg-surface-100 dark:bg-surface-800 px-2 py-1">{{ isMobile() ? 'Mobile' : 'Desktop' }}</span>
+            </header>
+            <div class="flex-1 p-4 flex flex-col gap-4">
+                <app-table-view></app-table-view>
+            </div>          
+        </p-sidebar-main>
+    </p-sidebar-layout>
+</div>
