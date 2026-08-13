@@ -9,11 +9,11 @@ import { Bell } from '@primeicons/angular/bell';
 import { Cog } from '@primeicons/angular/cog';
 import { Sidebar } from '@primeicons/angular/sidebar';
 import { TableView } from '../../components/table-view/table-view';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'home',
-  imports: [RouterLink,TableView ,AvatarModule, SidebarModule, ButtonModule, Inbox, Search, Users, Bell, Cog, Sidebar],
+  imports: [RouterLink, RouterLinkActive,RouterLink, TableView, AvatarModule, SidebarModule, ButtonModule, Inbox, Search, Users, Bell, Cog, Sidebar, RouterOutlet],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

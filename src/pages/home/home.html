@@ -23,13 +23,21 @@
                             <p-sidebar-group-content>
                                 <p-sidebar-menu>
                                     <p-sidebar-menu-item>
-                                        <button pSidebarMenuButton routerLink="/" [isActive]="true">
+                                        <button pSidebarMenuButton routerLink="/"
+                                                routerLinkActive
+                                                #homeRoute="routerLinkActive"
+                                                [routerLinkActiveOptions]="{ exact: true }"
+                                                [isActive]="homeRoute.isActive">
                                             <svg data-p-icon="home"></svg>
                                             <span>Home</span>
                                         </button>
                                     </p-sidebar-menu-item>                                  
                                     <p-sidebar-menu-item>
-                                        <button pSidebarMenuButton routerLink="/search">
+                                        <button pSidebarMenuButton 
+                                        routerLink="/search"
+                                        routerLinkActive
+                                        #searchRoute="routerLinkActive"
+                                        [isActive]="searchRoute.isActive">
                                             <svg data-p-icon="search"></svg>
                                             <span>Search</span>
                                         </button>
@@ -66,7 +74,7 @@
                 <span class="ml-auto text-xs text-muted-color rounded-md bg-surface-100 dark:bg-surface-800 px-2 py-1">{{ isMobile() ? 'Mobile' : 'Desktop' }}</span>
             </header>
             <div class="flex-1 p-4 flex flex-col gap-4">
-                <app-table-view></app-table-view>
+                <router-outlet></router-outlet>
             </div>          
         </p-sidebar-main>
     </p-sidebar-layout>
