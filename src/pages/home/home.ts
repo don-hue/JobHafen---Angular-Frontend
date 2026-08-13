@@ -2,22 +2,22 @@ import { Component, signal } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
-import { Home } from '@primeicons/angular/home';
 import { Inbox } from '@primeicons/angular/inbox';
 import { Search } from '@primeicons/angular/search';
 import { Users } from '@primeicons/angular/users';
 import { Bell } from '@primeicons/angular/bell';
 import { Cog } from '@primeicons/angular/cog';
 import { Sidebar } from '@primeicons/angular/sidebar';
-import { TableView } from '../table-view/table-view';
+import { TableView } from '../../components/table-view/table-view';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-left-tab',
-  imports: [TableView ,AvatarModule, SidebarModule, ButtonModule, Home, Inbox, Search, Users, Bell, Cog, Sidebar],
-  templateUrl: './left-tab.html',
-  styleUrl: './left-tab.css',
+  selector: 'home',
+  imports: [RouterLink,TableView ,AvatarModule, SidebarModule, ButtonModule, Inbox, Search, Users, Bell, Cog, Sidebar],
+  templateUrl: './home.html',
+  styleUrl: './home.css',
 })
-export class LeftTab {
+export class Home {
     isMobile = signal(false);
 
     constructor() {
