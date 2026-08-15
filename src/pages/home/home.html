@@ -11,8 +11,8 @@
                         <p-sidebar-menu>
                             <p-sidebar-menu-item>
                                 <button pSidebarMenuButton class="p-1!">
-                                    <div class="flex size-6 shrink-0 items-center justify-center rounded-md bg-linear-to-br from-violet-500 to-indigo-600 text-white text-xs font-bold leading-none">JH</div>
-                                    <span class="font-semibold text-sm">JobHafen</span>
+                                     <img src="/pinetree.ico" alt="Jobhafen" class="size-5 shrink-0 object-contain"/>
+                                    <span class="font-semibold text-sm">Jobhafen</span>
                                 </button>
                             </p-sidebar-menu-item>
                         </p-sidebar-menu>
@@ -71,7 +71,7 @@
                     <svg data-p-icon="sidebar"></svg>
                 </button>
                 <span class="text-sm font-medium">Dashboard</span>
-                <span class="ml-auto text-xs text-muted-color rounded-md bg-surface-100 dark:bg-surface-800 px-2 py-1">{{ isMobile() ? 'Mobile' : 'Desktop' }}</span>
+                <span class="text-xs text-muted-color rounded-md bg-surface-100 dark:bg-surface-800 px-2 py-1" style="margin-left: auto;">{{ isMobile() ? 'Mobile' : 'Desktop' }}</span>
             </header>
             <div class="flex-1 p-4 flex flex-col gap-4">
                 <router-outlet></router-outlet>

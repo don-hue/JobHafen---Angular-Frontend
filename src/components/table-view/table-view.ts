@@ -9,6 +9,7 @@ import { Search } from '@primeicons/angular/search';
 import { ButtonModule } from 'primeng/button';
 import { JobService } from '../../service/JobService';
 import { CommonModule } from '@angular/common';
+import { Replay } from '@primeicons/angular/replay';
 interface JobTableRow {
     id: number;
     jobTitle: string;
@@ -30,7 +31,7 @@ export interface Message {
 
 @Component({
   selector: 'app-table-view',
-  imports: [RatingModule, TableModule, TagModule, FormsModule, Search, ButtonModule, CommonModule],
+  imports: [Replay,RatingModule, TableModule, TagModule, FormsModule, Search, ButtonModule, CommonModule],
   templateUrl: './table-view.html',
   styleUrl: './table-view.css',
 })

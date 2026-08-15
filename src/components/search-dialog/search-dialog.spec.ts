@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Search } from './search';
+import { SearchDialog } from './search-dialog';
 
-describe('Search', () => {
-  let component: Search;
-  let fixture: ComponentFixture<Search>;
+describe('SearchDialog', () => {
+  let component: SearchDialog;
+  let fixture: ComponentFixture<SearchDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Search],
+      imports: [SearchDialog],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Search);
+    fixture = TestBed.createComponent(SearchDialog);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

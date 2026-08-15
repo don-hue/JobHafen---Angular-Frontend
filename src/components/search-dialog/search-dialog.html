@@ -1,0 +1,21 @@
+<p-toast />
+<div class="flex justify-center h-full">
+    <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4 w-full sm:w-56">
+        <div class="flex flex-col gap-1">
+            <input pInputText type="text" id="td_jobTitle" placeholder="Jobtitel" formControlName="jobTitle" [invalid]="isInvalid('jobTitle')" />
+             @if (isInvalid('jobTitle')) {
+                <p-message severity="error" size="small" variant="simple">Jobtitel notwendig</p-message>
+            }
+        </div>
+        <div class="flex flex-col gap-1">
+            <input pInputText type="text" id="td_plz" name="plz" placeholder="Postleitzahl"  formControlName="postleitzahl" [invalid]="isInvalid('postleitzahl')" />
+           @if (isInvalid('postleitzahl')) {
+                    <p-message severity="error" size="small" variant="simple">Postleitzahl notwendig</p-message>
+            }
+        </div>
+         <div class="flex justify-center">
+            <p-select [options]="radius" formControlName="radius" optionLabel="label" optionValue="value" placeholder="Select a radius" [invalid]="isInvalid('radius')" class="w-full md:w-56" />
+        </div>
+        <button pButton class="mt-auto" severity="secondary" type="submit">Speichern</button>
+    </form>
+</div>

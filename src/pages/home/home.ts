@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { Inbox } from '@primeicons/angular/inbox';
 import { Search } from '@primeicons/angular/search';
 import { Users } from '@primeicons/angular/users';
+import { Home as HomeIcon } from '@primeicons/angular/home';
 import { Bell } from '@primeicons/angular/bell';
 import { Cog } from '@primeicons/angular/cog';
 import { Sidebar } from '@primeicons/angular/sidebar';
@@ -13,7 +14,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'home',
-  imports: [RouterLink, RouterLinkActive,RouterLink, TableView, AvatarModule, SidebarModule, ButtonModule, Inbox, Search, Users, Bell, Cog, Sidebar, RouterOutlet],
+  imports: [HomeIcon, RouterLink ,RouterLinkActive,RouterLink, TableView, AvatarModule, SidebarModule, ButtonModule, Inbox, Search, Users, Cog, Sidebar, RouterOutlet],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

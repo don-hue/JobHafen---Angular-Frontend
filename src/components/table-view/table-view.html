@@ -1,7 +1,11 @@
 <p-table [value]="jobs" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template #header>
         <tr>
-            <th>Product</th>              
+            <th>  
+                Jobs
+                <button pButton class="flex-col"><svg data-p-icon="replay"></svg></button>
+            </th>
+                          
         </tr>
     </ng-template>
     <ng-template #body let-job>
