@@ -1,31 +1,37 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { FormBuilder, FormGroup, FormsModule, Validators, } from '@angular/forms';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { Times } from '@primeicons/angular/times';
-import { MessageService } from 'primeng/api';
-import { MessageModule } from 'primeng/message';
-import { ToastModule } from 'primeng/toast';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageModule } from 'primeng/message';
+import { SearchDto } from '../../dto/search-dto';
+import { SearchService } from '../../service/search-service';
+import { ToastModule } from 'primeng/toast';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 interface Radius {
     label: string;
     value: number;
 }
 @Component({
   selector: 'search-dialog',
-  imports: [SelectModule,ReactiveFormsModule,ToastModule,MessageModule,ButtonModule, FormsModule,IconFieldModule,InputIconModule, InputTextModule,Times ],
+  imports: [ProgressSpinnerModule,ToastModule,MessageModule,SelectModule,ReactiveFormsModule,ButtonModule, FormsModule,IconFieldModule,InputIconModule, InputTextModule,Times ],
   templateUrl: './search-dialog.html',
   styleUrl: './search-dialog.css',
-  providers: [MessageService]
+  providers: [MessageModule]
 })
 export class SearchDialog {
-  private messageService = inject(MessageService);
+  private ref = inject(DynamicDialogRef);
   private fb = inject(FormBuilder);
+  private searchService = inject(SearchService);
   searchForm: FormGroup;
   formSubmitted: boolean = false;
+  isLoading: boolean = false; 
+  private cdr = inject(ChangeDetectorRef);
 
   radius: Radius[] = [
         { label: '5km ', value: 5 },
@@ -37,7 +43,13 @@ export class SearchDialog {
   constructor() {
     this.searchForm = this.fb.group({
         jobTitle: ['', Validators.required],
-        postleitzahl: ['', Validators.required],
+        postalcode: [
+            '', 
+            [
+                Validators.required,
+                Validators.pattern(/^\d{5}$/)
+            ]
+        ],
         radius:[0, Validators.required] 
     })
 }
@@ -45,11 +57,28 @@ export class SearchDialog {
         this.formSubmitted = true;
         if (this.searchForm.invalid) {
             this.searchForm.markAllAsTouched();
-        return;
-
+            return;
         }
         if (this.searchForm) {
-          this.messageService.add({ severity: 'success', summary: 'Erfolgreich', detail: 'Suche angelegt', life: 3000 });
+            const form = this.searchForm.value
+            const searchDto: SearchDto = {
+                keyword: form.jobTitle, 
+                postal_code: form.postalcode, 
+                radius: form.radius
+            }; 
+            this.isLoading = true;
+            this.searchService.saveSearch(searchDto).subscribe({
+               next: (res) => {
+                this.ref.close(res);
+               }, 
+               error:(err) => {
+                this.ref.close();
+               },
+               complete: () => {
+                this.isLoading = false;
+               }
+            })
+
         } 
     }
     isInvalid(controlName: string) {

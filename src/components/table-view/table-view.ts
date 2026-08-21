@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 import {TEST_DATA} from '../../data/testData';
 import { Search } from '@primeicons/angular/search';
 import { ButtonModule } from 'primeng/button';
-import { JobService } from '../../service/JobService';
+import { JobService } from '../../service/job-service';
 import { CommonModule } from '@angular/common';
 import { Replay } from '@primeicons/angular/replay';
 interface JobTableRow {
@@ -68,7 +68,6 @@ export class TableView {
     this.jobService.postMessage(payload).subscribe({
         next: (res) => {
          console.log('2. response received:', res);
-
             this.response = res;
 
             console.log('3. response property:', this.response);

@@ -1,28 +1,29 @@
-import {ChangeDetectorRef, Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, inject, ChangeDetectionStrategy, ApplicationRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { Injectable } from '@angular/core';
-import {TEST_DATA} from '../../data/testData';
 import { ButtonModule } from 'primeng/button';
-import { JobService } from '../../service/JobService';
 import { CommonModule } from '@angular/common';
 import { PlusCircle } from '@primeicons/angular/plus-circle';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SearchDialog } from '../search-dialog/search-dialog';
 import { Replay } from '@primeicons/angular/replay';
-interface JobTableRow {
-    id: number;
-    jobTitle: string;
-    applied: boolean;
-    companyName: string;
-    portal: string;
+import { MessageService } from 'primeng/api';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
+import { SearchEntityDto } from '../../dto/search-entity-dto';
+import { SearchService } from '../../service/search-service';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { delay, finalize } from 'rxjs';
+interface SearchTableRow {
+    searchId: number;
+    keyword: string;
+    postal_code: string; 
+    radius: string;
 }
 
-export interface Message {
-  message: string;
-}
 
 
 @Injectable({
@@ -31,66 +32,28 @@ export interface Message {
 
 @Component({
   selector: 'app-search-table',
-  imports: [Replay,SearchDialog,RatingModule, TableModule, TagModule, FormsModule, PlusCircle, ButtonModule, CommonModule],
+  imports: [ProgressSpinnerModule,ToastModule,MessageModule, Replay,SearchDialog,RatingModule, TableModule, TagModule, FormsModule, PlusCircle, ButtonModule, CommonModule],
   templateUrl: './search-table.html',
   styleUrl: './search-table.css',
-  providers: [DialogService]
+  providers: [DialogService, MessageService]
 })
 
 
 export class SearchTable {
-    searches?: JobTableRow[];
-    response?: Message; 
-    private jobService = inject(JobService);
-    private cdr = inject(ChangeDetectorRef);
+    searches: SearchTableRow[] = []; 
     private dialogService = inject(DialogService);
+    private messageService = inject(MessageService);
     ref?: DynamicDialogRef | null;
+    private searchService = inject(SearchService);
+    private cdr = inject(ChangeDetectorRef);
+    public isLoading: boolean = false;  
 
-
-  
-    ngOnInit() {
-          // this.searches = TEST_DATA.jobs.map(job => {
-  
-          //     const company = TEST_DATA.companies.find(
-          //         c => c.id === job.companyId
-          //     );
-  
-          //     return {
-          //         id: job.id,
-          //         jobTitle: job.jobTitle,
-          //         applied: job.applied,
-          //         companyName: company?.companyName ?? 'Unknown',
-          //         portal: TEST_DATA.search.portal
-          //     };
-          // });      
-    }
     ngOnDestroy() {
       if(this.ref) {
         this.ref.close();
       }
     }
   
-    send(): void {
-       const payload: Message = {
-        message: 'Hello from Angular!',
-      };
-  
-       console.log('1. sending');
-  
-      this.jobService.postMessage(payload).subscribe({
-          next: (res) => {
-           console.log('2. response received:', res);
-  
-              this.response = res;
-  
-              console.log('3. response property:', this.response);
-              this.cdr.detectChanges();
-        },
-        error: (err) => {
-          console.error("XXX",err);
-        },
-      });
-    }
     show(): void {
         this.ref = this.dialogService.open(SearchDialog, {
             header: 'Neue Suche anlegen',
@@ -104,5 +67,74 @@ export class SearchTable {
                 '300px': '90vw'
             },
         });
+        this.ref?.onClose.subscribe( (searchEntityDtos: SearchEntityDto[]) => {
+          if(searchEntityDtos) {
+            this.messageService.add({ 
+              severity: 'success', 
+              summary: 'Erfolgreich', 
+              detail: 'Suche angelegt', 
+              life: 1500 });
+
+              console.log("XXX dto received")
+
+              this.searches = searchEntityDtos
+               .filter(search =>
+                !this.searches.some(
+                    existingSearch => existingSearch.searchId === search.id
+                ))
+              .map(search => {
+                return {
+                  searchId: search.id,
+                  keyword: search.keyword,
+                  postal_code: search.postal_code, 
+                  radius: search.radius,
+                }
+              })
+          } else {
+            this.messageService.add({ 
+              severity: 'error', 
+              summary: 'Fehler', 
+              detail: 'Suche konnte nicht angelegt werden.', 
+              life: 1500 });
+          }
+        })
+    }
+
+    update(): void {
+      this.isLoading = true;
+      this.searchService.getAllSearches()
+      .subscribe({
+        next: (res) => {
+            const newSearches = res
+                .filter(search =>
+                    !this.searches.some(
+                        existingSearch => existingSearch.searchId === search.id
+                    )
+                )
+                .map(search => ({
+                    searchId: search.id,
+                    keyword: search.keyword,
+                    postal_code: search.postal_code,
+                    radius: search.radius
+                }));
+
+            this.searches = [
+                ...this.searches,
+                ...newSearches
+            ];
+        },
+        error: (err) => {
+          this.messageService.add({ 
+              severity: 'error', 
+              summary: 'Fehler', 
+              detail: 'Keine Suchaufträge gefunden', 
+              life: 1500 });
+              this.isLoading = false
+        },
+        complete: () => {
+          this.isLoading = false; 
+          this.cdr.detectChanges();
+        }
+      })
     }
 }

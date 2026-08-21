@@ -1,3 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
 
-@import 'tailwindcss';
+.search-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+}
+
+.search-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.search-keyword {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.search-badge {
+    padding: 0.125rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.search-portals {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--p-text-muted-color);
+}
