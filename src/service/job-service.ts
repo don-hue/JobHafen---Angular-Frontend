@@ -1,18 +1,15 @@
 import { Injectable, Service, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+import { JobDto } from '../dto/job-dto';
 
-export interface Message {
-  message: string
-}
 @Service()
 export class JobService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/proxy/sendJobRequest';
+  private apiUrl = 'http://localhost:8080/proxy/getJobsRequest';
 
 
-
-  postMessage(message: Message): Observable<Message> {
-    return this.http.post<Message>(this.apiUrl, message);
+  getJobs(): Observable<JobDto[]> {
+    return this.http.get<JobDto[]>(this.apiUrl);
   }
 }

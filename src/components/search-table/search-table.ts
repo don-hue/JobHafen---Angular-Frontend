@@ -16,7 +16,6 @@ import { ToastModule } from 'primeng/toast';
 import { SearchEntityDto } from '../../dto/search-entity-dto';
 import { SearchService } from '../../service/search-service';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { delay, finalize } from 'rxjs';
 interface SearchTableRow {
     searchId: number;
     keyword: string;

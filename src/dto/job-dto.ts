@@ -1,6 +1,9 @@
+import { Url } from "url";
+
 export interface JobDto {
-    jobTitle: string; 
-    conpanyName: string; 
-    companyUrl: URL, 
-    searchId: number; 
+    id: number;
+    jobTitle: string;
+    applied: boolean;
+    companyName: string;
+    companyHomepage: Url; 
 }

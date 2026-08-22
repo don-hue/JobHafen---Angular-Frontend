@@ -10,16 +10,14 @@ import { ButtonModule } from 'primeng/button';
 import { JobService } from '../../service/job-service';
 import { CommonModule } from '@angular/common';
 import { Replay } from '@primeicons/angular/replay';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { Url } from 'url';
 interface JobTableRow {
     id: number;
     jobTitle: string;
     applied: boolean;
     companyName: string;
-    portal: string;
-}
-
-export interface Message {
-  message: string;
+    companyHomepage: Url;
 }
 
 
@@ -28,54 +26,52 @@ export interface Message {
 })
 
 
-
 @Component({
   selector: 'app-table-view',
-  imports: [Replay,RatingModule, TableModule, TagModule, FormsModule, Search, ButtonModule, CommonModule],
+  imports: [ProgressSpinnerModule,Replay,RatingModule, TableModule, TagModule, FormsModule, Search, ButtonModule, CommonModule],
   templateUrl: './table-view.html',
   styleUrl: './table-view.css',
 })
 export class TableView {
    jobs: JobTableRow[] = [];
    private jobService = inject(JobService);
-   response?: Message; 
    private cdr = inject(ChangeDetectorRef);
+  public isLoading: boolean = false; 
 
-  ngOnInit() {
-        this.jobs = TEST_DATA.jobs.map(job => {
-
-            const company = TEST_DATA.companies.find(
-                c => c.id === job.companyId
-            );
-
-            return {
-                id: job.id,
-                jobTitle: job.jobTitle,
-                applied: job.applied,
-                companyName: company?.companyName ?? 'Unknown',
-                portal: TEST_DATA.search.portal
-            };
-        });
-  }
-
-  send(): void {
-     const payload: Message = {
-      message: 'Hello from Angular!',
-    };
-
-     console.log('1. sending');
-
-    this.jobService.postMessage(payload).subscribe({
+  
+  getJob(): void {
+    this.isLoading = true;
+    this.jobService.getJobs().subscribe({
         next: (res) => {
-         console.log('2. response received:', res);
-            this.response = res;
-
-            console.log('3. response property:', this.response);
-            this.cdr.detectChanges();
+          console.log("XXX in next start");
+          console.log("XXX res:"+ res);
+          const newJobs = res
+          .filter(job =>
+            !this.jobs.some(
+              existingJob => existingJob.id === job.id
+            )
+           )
+           .map(job => ({
+              id: job.id,
+              jobTitle: job.jobTitle,
+              applied: job.applied,
+              companyName: job.companyName,
+              companyHomepage: job.companyHomepage 
+           }));
+           this.jobs = [
+            ...this.jobs,
+            ...newJobs
+           ]
       },
       error: (err) => {
         console.error("XXX",err);
+        this.isLoading = true;
       },
+      complete: () => {
+        console.log("XXX in complete start");
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 
