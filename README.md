@@ -44,7 +44,7 @@ Durch dieses Fundament ist die Architektur  Stack-agnostisch. Jedes Feature kann
 
 Primär werden DirectMessages verwendet mit dem AMQ-Protokoll.
 
-![Jobhafen](public/jobhafen.png)
+![jobhafen](public/jobhafen.PNG)
 
 Das Frontend wird vollständig mit **TypeScript** umgesetzt. Für die Benutzeroberfläche existieren in **React** und **Angular**; die beiden beliebtesten FE-Frameworks. Wie schon erwähnt kann jedes FE verwendet werden; auch Android oder iOS. 
 
