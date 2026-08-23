@@ -6,7 +6,7 @@
 
 ## 📋 Agenda
 
-1. [Aktueller Stand dieser Repository](#-aktueller-stand-dieser-repository)
+1. [Angular Frontend](#-angular-frontend)
 2. [Über das Projekt](#-über-das-projekt)
 3. [Architektur](#-architektur)
 4. [Vision](#-vision)
