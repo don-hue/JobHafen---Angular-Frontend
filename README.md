@@ -44,7 +44,7 @@ Durch dieses Fundament ist die Architektur  Stack-agnostisch. Jedes Feature kann
 
 Primär werden DirectMessages verwendet mit dem AMQ-Protokoll.
 
-![Jobhafen](images/jobhafen.png)
+![Jobhafen](public/jobhafen.png)
 
 Das Frontend wird vollständig mit **TypeScript** umgesetzt. Für die Benutzeroberfläche existieren in **React** und **Angular**; die beiden beliebtesten FE-Frameworks. Wie schon erwähnt kann jedes FE verwendet werden; auch Android oder iOS. 
 
@@ -60,4 +60,4 @@ Es werden die neuesten Versionen verwendet d.h.
 
 ## 🚀 Vision
 
-Jobhafen soll euch die Jobsuche erleichtern. :hugging_face: 
+Jobhafen soll euch die Jobsuche erleichtern. :hugs: 
