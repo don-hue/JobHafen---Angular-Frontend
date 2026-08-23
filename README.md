@@ -1,59 +1,63 @@
 # Jobhafen
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.8.
+> **Jobhafen** ist eine Webapplikation, die verschiedene Jobportale zentral durchsucht. Jobsuchende bekommen *eine* übersichtliche Plattform für die Stellensuche. *Ciao* zu lästigem Anmelden,  *Ciao* zu Dupikaten über mehrere Portale. Individuell und privat. 
 
-## Development server
+---
 
-To start a local development server, run:
+## 📋 Agenda
 
-```bash
-ng serve
-```
+1. [Aktueller Stand dieser Repository](#-aktueller-stand-dieser-repository)
+2. [Über das Projekt](#-über-das-projekt)
+3. [Architektur](#-architektur)
+4. [Vision](#-vision)
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 📂 Angular Frontend
 
-## Code scaffolding
+Das Angular-Frontend ist als eine **Inspiration** anzusehen. Aufgrund der modularen und agnostischen Natur dieser Architektur kann das Frontend mit jedem belieibigen Techstack ausgetauscht werden; **ohne Nebenwirkungen**. Gleichzeitig sollte sie nicht als vollständig unabhängiges Projekt betrachtet werden, sondern als **FE-Baustein des Gesamtprojekts**.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Explizit wurde hier mit **Angular v22** und **NGPrime** (als UI/UX Libary) gearbeitet. Für die Verwendung von NGPrime wird ein API-Key benötigt, welcher über eine kostenlose Anmeldung zur Verfügung gestellt wird.
 
-```bash
-ng generate component component-name
-```
+Die Applikation wird gemäß der Angular CLI gestartet und auf *localhost:4200* gehostet. 
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## 📌 Über das Projekt
 
-## Building
+**Jobhafen** ist eine hybride Webapplikation, die Jobsuchenden eine* zentrale* Anlaufstelle für die Suche nach Stellenangeboten bieten soll.
 
-To build the project run:
+Das Ziel von Jobhafen ist es, die größten Jobportale automatisiert zu durchsuchen, die gefundenen Stellenangebote zentral zusammenzuführen und übersichtlich darzustellen.
 
-```bash
-ng build
-```
+Dadurch müssen Jobsuchende nicht mehr mehrere Jobportale einzeln durchsuchen,einzel anmelden und Duplikate händisch aussortieren, sondern können sich voll und ganz auf ihre Jobsuche konzentrieren.  
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Jobhafen verfolgt damit das Ziel, die Jobsuche **zentraler, übersichtlicher und effizienter** zu gestalten.
 
-## Running unit tests
+P.S.💅 Ich bin der Meinung, dass wir( als User) nicht mehrere Portale, mehrere Paywalls und mehrere Accounts brauchen, um am Ende redundante Informationen; in diesem Fall Jobs, zu bekommen, die man auch auf der Karriere-Seite der jeweiligen Firma bekommen kann.
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+---
 
-```bash
-ng test
-```
+## 🏗️ Architektur
 
-## Running end-to-end tests
+Jobhafen basiert auf einer **hybriden Microservice Architektur**, bei der unterschiedliche Technologien für Frontend und Backend eingesetzt werden. Es gibt mehrere Microservices, die mittels RabbitMQ miteinander kommunizieren. Aufgrund der hohen Diversität von Frontend-Frameworks kommuniziert das FE **nicht** mit RabbitMQ direkt, sondern schickt über HTTPS-Request seine Anfragen an einen **Proxy**. Dieser Proxy erinnert an eine milde Ausprägung eines Orchestrators, wobei hierbei das SAGA-Pattern nicht explizit, aber doch im philosophischen Gedankenmodell implementiert wurde d.h. der Proxy verwaltet Kommunikationsketten. 
 
-For end-to-end (e2e) testing, run:
+Durch dieses Fundament ist die Architektur  Stack-agnostisch. Jedes Feature kann durch einen Microservice implementiert werden, jeder Baustein kann ersetzt werden, da die Kommunikation durch RabbitMQ stattfindet. 
 
-```bash
-ng e2e
-```
+Primär werden DirectMessages verwendet mit dem AMQ-Protokoll.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+![Jobhafen](images/jobhafen.png)
 
-## Additional Resources
+Das Frontend wird vollständig mit **TypeScript** umgesetzt. Für die Benutzeroberfläche existieren in **React** und **Angular**; die beiden beliebtesten FE-Frameworks. Wie schon erwähnt kann jedes FE verwendet werden; auch Android oder iOS. 
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Das Backend basiert auf **Java**.
+
+Für die Kommunikation zwischen einzelnen Komponenten wird **RabbitMQ** eingesetzt. **PostgreSQL** dient als relationale Datenbank zur persistenten Speicherung der Daten; beide laufen im Docker Container. Die Images können im Dockerhub runtergeladen werden.
+
+Es werden die neuesten Versionen verwendet d.h.
+* Java 25 SE
+* Angular 22 als Typerscript-Variante
+---
+
+
+## 🚀 Vision
+
+Jobhafen soll euch die Jobsuche erleichtern. :hugging_face: 
