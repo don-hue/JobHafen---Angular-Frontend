@@ -1,3 +1,4 @@
+<p-toast/>
 <p-table 
     [value]="jobs" 
     [tableStyle]="{ 'min-width': '50rem' }"
@@ -25,12 +26,20 @@
     <ng-template #body let-job>
         <tr>
             <td>
-                <div class="flex items-center gap-3">
-    
-                    <div class="flex flex-col">
+                <div class="job-cell" [id]="job.id">
+                     <div class = "checked-cell" [class.hidden] = "!job.applied">
+                        <svg data-p-icon="check-circle"></svg> 
+                    </div>
+                    <div class="job-info">
                         <span class="search-keyword">{{ job.jobTitle }}</span>
                         <span class="search-portals">{{ job.companyName }}</span>
                     </div>
+                    <div class="toggle-cell">
+                        <p-toggleswitch [(ngModel)]="job.applied"  inputId="switch" (onChange)="updateApplied(job)" [disabled]="job.toogleDisable" />
+                        <label for="switch">Beworben</label>
+                    </div>
+                   
+                   
                 </div>
             </td>
         </tr>

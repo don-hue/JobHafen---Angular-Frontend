@@ -25,42 +25,50 @@
     <ng-template #body let-search>
         <tr>
             <td>
-               <div class="search-cell">
+               <div class="search-cell" [id]="search.searchId">
+                    <button 
+                    class="checked-cell"
+                    severity="danger" 
+                    pButton 
+                    (click)="deleteSearch(search)" 
+                    [disabled] = "search.disableDeleteButton">
+                        <svg data-p-icon="trash"></svg> 
+                    </button>
+                    <div style="gap: 1.5rem;">
+                        <div class="search-info">
+                            <span class="search-keyword">
+                                {{ search.keyword }} 
+                            </span>
 
-                    <div class="search-info">
-                        <span class="search-keyword">
-                            {{ search.keyword }}
-                        </span>
+                            <span class="search-badge">
+                                {{ search.postal_code }}
+                            </span>
 
-                        <span class="search-badge">
-                            {{ search.postal_code }}
-                        </span>
-
-                        <span class="search-badge">
-                            {{ search.radius }} km
-                        </span>
-                    </div>
-
-                    <div class="search-portals">
-                        <span>Portale:</span>
-                        <span>StepStone</span>
-                        <span>Commerzbank</span>
-                        <span>Finanz Informatik</span>
-                    </div>
-
+                            <span class="search-badge">
+                                {{ search.radius }} km
+                            </span>
+                        </div>
+                
+                        <div class="search-portals">
+                            <span>Portale:</span>
+                            <span>StepStone |</span>
+                            <span>Commerzbank |</span>
+                            <span>Finanz Informatik</span>
+                        </div>
+                    </div> 
+                    
                 </div>
             </td>
         </tr>
     </ng-template>
 </p-table>
-    <div class="flex flex-col items-left " style="padding-top: 1rem;padding-left: 1rem;">
-            <div class="flex flex-wrap p-4">
-                <button (click)="show()" pButton class="flex-wrap">
-                    <svg data-p-icon="plus-circle"></svg> 
-                    Suche anlegen
-                </button>
-            </div>
-
-     </div>
+<div class="flex flex-col items-left " style="padding-top: 1rem;padding-left: 1rem;">
+    <div class="flex flex-wrap p-4">
+        <button (click)="show()" pButton class="flex-wrap">
+            <svg data-p-icon="plus-circle"></svg> 
+            Suche anlegen
+        </button>
+    </div>
+</div>
 
 

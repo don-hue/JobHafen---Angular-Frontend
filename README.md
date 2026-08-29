@@ -20,6 +20,9 @@ Explizit wurde hier mit **Angular v22** und **NGPrime** (als UI/UX Libary) gearb
 
 Die Applikation wird gemäß der Angular CLI gestartet und auf *localhost:4200* gehostet. 
 
+![jobhafen](public/SearchPage.PNG)
+![jobhafen](public/JobPage.PNG)
+
 ---
 
 ## 📌 Über das Projekt

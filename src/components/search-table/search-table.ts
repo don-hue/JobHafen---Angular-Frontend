@@ -16,11 +16,13 @@ import { ToastModule } from 'primeng/toast';
 import { SearchEntityDto } from '../../dto/search-entity-dto';
 import { SearchService } from '../../service/search-service';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { Trash } from '@primeicons/angular/trash';
 interface SearchTableRow {
     searchId: number;
     keyword: string;
     postal_code: string; 
     radius: string;
+    disableDeleteButton: boolean
 }
 
 
@@ -31,14 +33,14 @@ interface SearchTableRow {
 
 @Component({
   selector: 'app-search-table',
-  imports: [ProgressSpinnerModule,ToastModule,MessageModule, Replay,SearchDialog,RatingModule, TableModule, TagModule, FormsModule, PlusCircle, ButtonModule, CommonModule],
+  imports: [Trash,ProgressSpinnerModule,ToastModule,MessageModule, Replay,SearchDialog,RatingModule, TableModule, TagModule, FormsModule, PlusCircle, ButtonModule, CommonModule],
   templateUrl: './search-table.html',
   styleUrl: './search-table.css',
   providers: [DialogService, MessageService]
 })
 
 
-export class SearchTable {
+export class SearchTable implements OnInit {
     searches: SearchTableRow[] = []; 
     private dialogService = inject(DialogService);
     private messageService = inject(MessageService);
@@ -46,13 +48,26 @@ export class SearchTable {
     private searchService = inject(SearchService);
     private cdr = inject(ChangeDetectorRef);
     public isLoading: boolean = false;  
+    
 
     ngOnDestroy() {
       if(this.ref) {
         this.ref.close();
       }
     }
-  
+
+    ngOnInit():void {
+      const test: SearchTableRow = {
+            searchId: 1,
+            keyword: "Java",
+            postal_code:"41063", 
+            radius:"15",
+            disableDeleteButton: false,  
+          };
+
+          this.searches.push(test);
+    }
+
     show(): void {
         this.ref = this.dialogService.open(SearchDialog, {
             header: 'Neue Suche anlegen',
@@ -73,7 +88,6 @@ export class SearchTable {
               summary: 'Erfolgreich', 
               detail: 'Suche angelegt', 
               life: 1500 });
-
               console.log("XXX dto received")
 
               this.searches = searchEntityDtos
@@ -87,6 +101,7 @@ export class SearchTable {
                   keyword: search.keyword,
                   postal_code: search.postal_code, 
                   radius: search.radius,
+                  disableDeleteButton:false,
                 }
               })
           } else {
@@ -114,7 +129,8 @@ export class SearchTable {
                     searchId: search.id,
                     keyword: search.keyword,
                     postal_code: search.postal_code,
-                    radius: search.radius
+                    radius: search.radius,
+                    disableDeleteButton: false,
                 }));
 
             this.searches = [
@@ -132,6 +148,34 @@ export class SearchTable {
         },
         complete: () => {
           this.isLoading = false; 
+          this.cdr.detectChanges();
+        }
+      })
+    }
+
+    deleteSearch(cell:SearchTableRow) {
+      console.log("delete button clicked")
+      cell.disableDeleteButton = true
+      this.searchService.deleteSearch(cell.searchId).subscribe({
+        next: _ => {
+          this.messageService.add({ 
+              severity: 'success', 
+              summary: 'Erfolgreich',
+              detail: 'Suche wurde gelöscht', 
+              life: 1500 });
+          const toBeDeleted = this.searches.findIndex(search => search.searchId == cell.searchId);
+          this.searches.splice(toBeDeleted, 1);
+        }, 
+        error: (err) => {
+          console.log(err);
+           this.messageService.add({ 
+              severity: 'error', 
+              summary: 'Fehler', 
+              detail: 'Suche konnte nicht gelöscht werden', 
+              life: 1500 });
+          cell.disableDeleteButton  = false; 
+        }, 
+        complete: () => {
           this.cdr.detectChanges();
         }
       })
