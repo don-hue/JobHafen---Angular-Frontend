@@ -50,17 +50,17 @@ export class TableView implements OnInit {
   ngOnInit(): void {
     const test: JobTableRow = {
             id: 1,
-            jobTitle: "Java",
+            jobTitle: "Java Entwickler (m/w/d)",
             applied:true, 
-            companyName:"Commerzbank",
+            companyName:"DeineTraumFirma GmbH",
             companyHomepage: undefined, 
             toogleDisable: false,
           };
     const test1: JobTableRow = {
       id: 2,
-      jobTitle: "Full Stack Developer (m/w/d) – eHealth-Software",
+      jobTitle: "Full Stack Developer (m/w/d)",
       applied:false, 
-      companyName:"Deutsches Medizinrechenzentrum GmbH",
+      companyName:"DeineTraumFirma GmbH",
       companyHomepage: undefined, 
       toogleDisable:false,
     };
