@@ -7,9 +7,9 @@ import { SearchEntityDto } from '../dto/search-entity-dto';
 @Service()
 export class SearchService {
     private http = inject(HttpClient);
-    private saveUrl = 'http://localhost:8080/proxy/sendSaveSearchRequest';
-    private getUrl = 'http://localhost:8080/proxy/sendGetAllRequest';
-    private deleteUrl = 'http://localhost:8080/proxy/sendDeleteRequest';
+    private saveUrl = 'http://localhost:8080/proxy/search/sendSaveSearchRequest';
+    private getUrl = 'http://localhost:8080/proxy/search/sendGetAllRequest';
+    private deleteUrl = 'http://localhost:8080/proxy/search/sendDeleteRequest';
     saveSearch(searchDto: SearchDto): Observable<SearchEntityDto[]> {
         return this.http.post<SearchEntityDto[]>(this.saveUrl, searchDto);
     }

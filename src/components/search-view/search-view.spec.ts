@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchTable } from './search-table';
+import { SearchTable } from './search-view';
 
 describe('SearchTable', () => {
   let component: SearchTable;

@@ -1,0 +1,34 @@
+<p-table
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [scrollable]="true"
+    scrollHeight="calc(100vh - 10vh)"
+>
+    <ng-template #header>
+        <tr>
+            <th>
+                Einstellungen
+            </th>              
+        </tr>
+    </ng-template>
+    <ng-template #body>
+        <tr>
+            <td>
+               <div class="flex justify-center">
+                    <p-card class="max-w-sm w-full" header="Pro Subscription" subheader="Everything you need to scale your workflow">
+                        <p>Get unlimited access to all features, priority support, and advanced analytics to help your team grow faster.</p>
+                        <ng-template #footer>
+                            <div class="flex flex-col gap-4">
+                                <span class="text-lg font-medium">$29 / month</span>
+                                <button type="button" pButton class="w-full">Upgrade</button>
+                            </div>
+                        </ng-template>
+                    </p-card>
+                </div>
+
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+
+

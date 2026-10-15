@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { TableView } from '../components/table-view/table-view';
-import { SearchTable } from '../components/search-table/search-table';
+import { SearchTable } from '../components/search-view/search-view';
+import { SettingView } from '../components/setting-view/setting-view';
 
 export const routes: Routes = [
     {
@@ -10,5 +11,9 @@ export const routes: Routes = [
     {
         path: 'search',
         component: SearchTable
+    },
+    {
+        path: 'setting',
+        component: SettingView
     },
 ];

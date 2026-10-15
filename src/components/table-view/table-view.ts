@@ -18,6 +18,7 @@ import { updateAppliedRequestBody } from '../../dto/request-dto';
 import { MessageService } from 'primeng/api';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
+import { Sparkles } from '@primeicons/angular/sparkles';
 interface JobTableRow {
     id: number;
     jobTitle: string;
@@ -35,7 +36,7 @@ interface JobTableRow {
 
 @Component({
   selector: 'app-table-view',
-  imports: [ToastModule,MessageModule,ToggleSwitchModule,CheckCircle,ProgressSpinnerModule,Replay,RatingModule, TableModule, TagModule, FormsModule, Search, ButtonModule, CommonModule],
+  imports: [ToastModule,MessageModule,ToggleSwitchModule,CheckCircle,ProgressSpinnerModule,Replay,RatingModule, TableModule, TagModule, FormsModule, Search, ButtonModule, CommonModule, Sparkles],
   templateUrl: './table-view.html',
   styleUrl: './table-view.css',
   providers: [MessageService]
@@ -139,6 +140,10 @@ export class TableView implements OnInit {
         this.cdr.detectChanges();
       }
     })
+  }
+
+  test(): void {
+    console.log("clicked")
   }
 
 }

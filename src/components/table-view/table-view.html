@@ -27,9 +27,17 @@
         <tr>
             <td>
                 <div class="job-cell" [id]="job.id">
-                     <div class = "checked-cell" [class.hidden] = "!job.applied">
-                        <svg data-p-icon="check-circle"></svg> 
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div className = "checked-cell" [class.hidden] = "!job.applied" style="padding-bottom: 20px;">
+                            <svg data-p-icon="check-circle"></svg> 
+                        </div>
+                        <button className = "checked-cell-button" [class.hidden] = "!job.applied" pButton severity="help" (click)="test()">
+                            <svg data-p-icon="sparkles"></svg> 
+                        </button>
+                      
+                        
                     </div>
+                     
                     <div class="job-info">
                         <span class="search-keyword">{{ job.jobTitle }}</span>
                         <span class="search-portals">{{ job.companyName }}</span>
@@ -38,8 +46,6 @@
                         <p-toggleswitch [(ngModel)]="job.applied"  inputId="switch" (onChange)="updateApplied(job)" [disabled]="job.toogleDisable" />
                         <label for="switch">Beworben</label>
                     </div>
-                   
-                   
                 </div>
             </td>
         </tr>

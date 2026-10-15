@@ -34,8 +34,8 @@ interface SearchTableRow {
 @Component({
   selector: 'app-search-table',
   imports: [Trash,ProgressSpinnerModule,ToastModule,MessageModule, Replay,SearchDialog,RatingModule, TableModule, TagModule, FormsModule, PlusCircle, ButtonModule, CommonModule],
-  templateUrl: './search-table.html',
-  styleUrl: './search-table.css',
+  templateUrl: './search-view.html',
+  styleUrl: './search-view.css',
   providers: [DialogService, MessageService]
 })
 
@@ -57,15 +57,15 @@ export class SearchTable implements OnInit {
     }
 
     ngOnInit():void {
-      const test: SearchTableRow = {
-            searchId: 1,
-            keyword: "Java",
-            postal_code:"41063", 
-            radius:"15",
-            disableDeleteButton: false,  
-          };
+      // const test: SearchTableRow = {
+      //       searchId: 1,
+      //       keyword: "Java",
+      //       postal_code:"41063", 
+      //       radius:"15",
+      //       disableDeleteButton: false,  
+      //     };
 
-          this.searches.push(test);
+      //     this.searches.push(test);
     }
 
     show(): void {

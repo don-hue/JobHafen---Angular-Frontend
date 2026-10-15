@@ -43,7 +43,11 @@
                                         </button>
                                     </p-sidebar-menu-item>                                                                                
                                     <p-sidebar-menu-item>
-                                        <button pSidebarMenuButton>
+                                        <button pSidebarMenuButton
+                                        routerLink="/setting"
+                                        routerLinkActive
+                                        #settingRoute="routerLinkActive"
+                                        [isActive]="settingRoute.isActive">
                                             <svg data-p-icon="cog"></svg>
                                             <span>Settings</span>
                                         </button>

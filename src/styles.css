@@ -81,3 +81,10 @@
     gap: 0.5rem;
     margin-left:auto;
 }
+.checked-cell-button{
+    
+    background-color: blue;
+}
+.checked-cell-button:hover{
+    transform: scale(1.05);
+}
